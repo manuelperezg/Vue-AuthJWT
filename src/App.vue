@@ -1,17 +1,36 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link v-if="isLoggedIn" to="/guest">Guest Page |</router-link> 
+      <router-link v-if="isLoggedIn && role == 'admin' " to="/admin">Admin Page |</router-link> 
+      <router-link v-if="isLoggedIn" to="/resources"> Resources |</router-link>
+      <router-link to="/about">About |</router-link>
+      <span v-if="isLoggedIn"> <a @click="logout" > Salir </a></span>
+      <span v-else> <router-link to="/login"> Entrar </router-link></span>
+    </div>
+    <router-view/>
   </div>
 </template>
-
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
 export default {
-  name: "app",
-  components: {
-    HelloWorld
+  computed: {
+    data() {
+      return {
+        role: ''
+      }
+    },
+    isLoggedIn: function() {
+      this.role = this.$store.getters.user.role;
+      return this.$store.getters.isLoggedIn;
+    }
+  },
+  methods: {
+    logout: function() {
+      this.$store.dispatch("logout").then(() => {
+        this.$router.push("/login");
+      });
+    }
   }
 };
 </script>
