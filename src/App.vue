@@ -26,10 +26,10 @@ export default {
     }
   },
   methods: {
-    logout: function() {
-      this.$store.dispatch("logout").then(() => {
-        this.$router.push("/login");
-      });
+   async logout () {
+      await this.$store.dispatch("logout").then(() => {
+        this.$router.push({ name: "about" });
+      }).catch( (error)=> console.log(error))
     }
   }
 };

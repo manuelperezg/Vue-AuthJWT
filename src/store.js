@@ -76,6 +76,7 @@ const store = new Vuex.Store({
         // localStorage.removeItem("vuex");
         delete axios.defaults.headers.common["Authorization"];
         resolve();
+        // reject(new Error('woops'));
       });
     }
   },
